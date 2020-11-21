@@ -7,4 +7,6 @@ environment:
 
 dependencies:
   dart_enum_to_string_check:
-    path:
+    git:
+      url: https://github.com/fartem/dart-enum-to-string-check
+      ref: master

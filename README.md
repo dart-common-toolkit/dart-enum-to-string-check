@@ -15,8 +15,8 @@ Soon.
 ## References
 
 Solutions from [dart-code-metrics](https://github.com/wrike/dart-code-metrics) by [Wrike](https://github.com/wrike):
-- [Files resolving in Dart Analyzer Plugin]()
-- [Dart Analyzer Plugin utils]()
+- [Files resolving in Dart Analyzer Plugin](https://github.com/fartem/dart-enum-to-string-check/blob/master/lib/src/analyzer_plugin/analyzer_plugin.dart)
+- [Dart Analyzer Plugin utils](https://github.com/fartem/dart-enum-to-string-check/blob/master/lib/src/analyzer_plugin/analyzer_plugin_utils.dart)
 
 ## How to contribute
 
