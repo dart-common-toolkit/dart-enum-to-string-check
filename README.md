@@ -1,8 +1,10 @@
 # dart_enum_to_string_check
 
+[![Travis CI](https://travis-ci.org/fartem/dart-enum-to-string-check.svg?branch=master)](https://travis-ci.org/fartem/dart-enum-to-string-check)
+
 ## About
 
-Plugin for Dart Analyzer for check enum.toString() usages.
+Plugin for Dart Analyzer to checking enum.toString() usages.
 
 ## Motivation
 
@@ -20,7 +22,13 @@ Solutions from [dart-code-metrics](https://github.com/wrike/dart-code-metrics) b
 
 ## How to contribute
 
-Soon.
+Read [Commit Convention](https://github.com/fartem/repository-rules/blob/master/commit-convention/COMMIT_CONVENTION.md). Make sure your build is green before you contribute your pull request. Then:
+
+```shell
+$ dart analyze
+```
+
+If you don't see any error messages, submit your pull request.
 
 ## Contributors
 

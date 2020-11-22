@@ -8,9 +8,9 @@ import 'package:analyzer/src/dart/analysis/driver.dart';
 import 'package:analyzer_plugin/plugin/plugin.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart' as plugin;
 import 'package:analyzer_plugin/protocol/protocol_generated.dart' as plugin;
+import 'package:glob/glob.dart';
 import 'package:dart_enum_to_string_check/src/analyzer_plugin/analyzer_plugin_utils.dart';
 import 'package:dart_enum_to_string_check/src/analyzer_plugin/enum_to_string_checker.dart';
-import 'package:glob/glob.dart';
 
 class MetricsAnalyzerPlugin extends ServerPlugin {
   final _excludeFolders = ['.dart_tool/**', 'packages/**', '**/.symlinks/**'];
