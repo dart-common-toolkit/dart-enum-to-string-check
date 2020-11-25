@@ -8,7 +8,7 @@ Plugin for Dart Analyzer to checking enum.toString() usages.
 
 ## Motivation
 
-Default Enum.toString() method represent enum constant as class name and constant name (example: `Colors.green` but not `green`). In some cases this cast is not valid for a program logic (parse values to DB or JSON) and can causing problems (when from DB you get strings without class names, `"green" == Colors.green.toString` is not as we need). Plugin helps to prevent described problem.
+Default Enum.toString() method represent enum constant as class name and constant name (example: `Colors.green` but not `green`). In some cases this cast is not valid for a program logic (parse values to DB or JSON) and can causing problems (when from DB you get strings without class names, `"green" == Colors.green.toString()` is not as we need). Plugin helps to prevent described problem.
 
 ## How to use
 
