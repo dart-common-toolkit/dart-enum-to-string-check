@@ -1,6 +1,6 @@
 # dart_enum_to_string_check
 
-[![Travis CI](https://travis-ci.org/fartem/dart-enum-to-string-check.svg?branch=master)](https://travis-ci.org/fartem/dart-enum-to-string-check)
+[![GitHubActions](https://github.com/fartem/dart-enum-to-string-check/workflows/Dart/badge.svg)](https://github.com/fartem/dart-enum-to-string-check/actions?query=workflow%3ADart)
 
 ## About
 
