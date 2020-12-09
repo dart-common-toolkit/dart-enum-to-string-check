@@ -11,6 +11,7 @@ dependencies:
   analyzer_plugin: '>=0.2.1 <0.4.0'
   glob: ^1.1.7
   path: ^1.6.2
+  yaml: ^2.2.1
 
 dev_dependencies:
   effective_dart: ^1.2.0

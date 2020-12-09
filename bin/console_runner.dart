@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/analyzer_plugin_utils.dart';
 import 'package:dart_enum_to_string_check/src/analyzer_plugin/enum_to_string_checker.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart';
+import 'package:yaml/yaml.dart';
 
 Future<void> main(List<String> arguments) async {
   final root = Directory.current.path;
@@ -16,6 +16,11 @@ Future<void> main(List<String> arguments) async {
   }
   final paths = [libPath];
   final excludeFolders = ['.dart_tool/**', 'packages/**', '**/.symlinks/**'];
+  if (File('$root/analysis_options.yaml').existsSync()) {
+    final analysisOptions = loadYaml(File('$root/analysis_options.yaml').readAsStringSync()) as YamlMap;
+    final excluded = (analysisOptions.nodes['analyzer'] as YamlMap)['exclude'] as YamlList;
+    excludeFolders.addAll(excluded.map((dynamic e) => e as String));
+  }
   final analysisContextCollection = AnalysisContextCollection(
     includedPaths: paths,
     resourceProvider: PhysicalResourceProvider.INSTANCE,
