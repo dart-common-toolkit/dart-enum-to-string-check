@@ -137,8 +137,6 @@ class MetricsAnalyzerPlugin extends ServerPlugin {
         filesByDriver.putIfAbsent(driver, () => <String>[]).add(file);
       }
     }
-    filesByDriver.forEach((driver, files) {
-      driver.priorityFiles = files;
-    });
+    filesByDriver.forEach((driver, files) => driver.priorityFiles = files);
   }
 }
