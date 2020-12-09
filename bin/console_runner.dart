@@ -7,16 +7,28 @@ import 'package:glob/glob.dart';
 import 'package:path/path.dart';
 
 Future<void> main(List<String> arguments) async {
-  final paths = <String>[];
+  final root = Directory.current.path;
+  final libPath = '$root/lib';
+  if (!Directory(libPath).existsSync()) {
+    print('Cannot find lib in $root');
+    exit(-1);
+  }
+  final paths = [libPath];
   final analysisContextCollection = AnalysisContextCollection(
     includedPaths: paths,
     resourceProvider: PhysicalResourceProvider.INSTANCE,
   );
   final filePaths = paths.expand((path) => Glob('$path/**/*.dart').listSync().whereType<File>().map((e) => e.path)).toList();
+  final errors = <EnumToStringCheckerIssue>[];
   for (final filePath in filePaths) {
     final normalizedPath = normalize(filePath);
     final unit = await analysisContextCollection.contextFor(normalizedPath).currentSession.getResolvedUnit(normalizedPath);
-    final errors = EnumToStringChecker(unit.unit).enumToStringErrors();
-    print(errors);
+    final errorsInFile = EnumToStringChecker(unit.unit).enumToStringErrors();
+    errors.addAll(errorsInFile);
+  }
+  if (errors.isEmpty) {
+    exit(0);
+  } else {
+    exit(-1);
   }
 }
