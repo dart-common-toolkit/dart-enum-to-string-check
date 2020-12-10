@@ -27,7 +27,7 @@ List<String> resolvePaths(List<String> paths, List<String> excludedFolders) {
 bool _isExcluded(String filePath, Iterable<Glob> excludes) =>
     excludes.any((exclude) => exclude.matches(filePath));
 
-Future<List<EnumToStringCheckerIssue>> findIssues(AnalysisContextCollection analysisContextCollection, List<String> paths,) async {
+Future<List<EnumToStringCheckerIssue>> findAnalyzerIssues(AnalysisContextCollection analysisContextCollection, List<String> paths,) async {
   final issues = <EnumToStringCheckerIssue>[];
   for (final filePath in paths) {
     final normalizedPath = normalize(filePath);

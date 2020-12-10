@@ -26,7 +26,7 @@ Future<void> main(List<String> arguments) async {
     excludedPaths: excludedFolders,
   );
   final filePaths = resolvePaths(paths, excludedFolders);
-  final issues = await findIssues(analysisContextCollection, filePaths);
+  final issues = await findAnalyzerIssues(analysisContextCollection, filePaths);
   if (issues.isEmpty) {
     exit(0);
   } else {
