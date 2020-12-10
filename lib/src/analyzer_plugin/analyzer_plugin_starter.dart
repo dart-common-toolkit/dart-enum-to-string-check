@@ -6,6 +6,6 @@ import 'package:dart_enum_to_string_check/src/analyzer_plugin/analyzer_plugin.da
 
 void start(Iterable<String> _, SendPort sendPort) {
   ServerPluginStarter(
-    MetricsAnalyzerPlugin(PhysicalResourceProvider.INSTANCE)
+    AnalyzerPlugin(PhysicalResourceProvider.INSTANCE)
   ).start(sendPort);
 }

@@ -15,8 +15,8 @@ import 'package:glob/glob.dart';
 import 'package:dart_enum_to_string_check/src/analyzer_plugin/analyzer_plugin_utils.dart';
 import 'package:dart_enum_to_string_check/src/analyzer_plugin/enum_to_string_checker.dart';
 
-class MetricsAnalyzerPlugin extends ServerPlugin {
-  final _excludeFolders = ['.dart_tool/**', 'packages/**', '**/.symlinks/**'];
+class AnalyzerPlugin extends ServerPlugin {
+  static const excludedFolders = ['.dart_tool/**', 'packages/**', '**/.symlinks/**'];
   final _excludedGlobs = <Glob>[];
 
   var _filesFromSetPriorityFilesRequest = <String>[];
@@ -33,7 +33,7 @@ class MetricsAnalyzerPlugin extends ServerPlugin {
   @override
   String get version => '1.0.0';
 
-  MetricsAnalyzerPlugin(ResourceProvider provider) : super(provider);
+  AnalyzerPlugin(ResourceProvider provider) : super(provider);
 
   @override
   void contentChanged(String path) {
@@ -53,7 +53,7 @@ class MetricsAnalyzerPlugin extends ServerPlugin {
       ..fileContentOverlay = fileContentOverlay;
 
     _excludedGlobs.addAll(
-      prepareExcludes(_excludeFolders, root.root)
+      prepareExcludes(excludedFolders, root.root)
     );
     final dartDriver = contextBuilder.buildDriver(root);
     runZonedGuarded(() {
