@@ -12,6 +12,8 @@ Default Enum.toString() method represent enum constant as class name and constan
 
 ## How to use
 
+### From Dart Analyzer Server
+
 Add plugin as development dependency in `pubspec.yml`:
 
 ```yaml
@@ -33,6 +35,14 @@ analyzer:
 ```
 
 Then restart Dart Analyzer Server.
+
+### From CLI
+
+Download plugin to your machine and provide `bin/` location to PATH. Then run from project folder:
+
+```shell
+dart dart_enum_to_string_check.dart
+```
 
 ## References
 
