@@ -30,7 +30,7 @@ List<String> resolvePaths(List<String> paths, List<String> excludedFolders) {
 bool _isExcluded(String filePath, Iterable<Glob> excludes) =>
     excludes.any((exclude) => exclude.matches(filePath));
 
-Future<List<AnalysisError>> collectAnalyzerErrors(AnalysisContextCollection analysisContextCollection, List<String> paths,) async {
+Future<List<AnalysisError>> collectAnalyzerErrors(AnalysisContextCollection analysisContextCollection, List<String> paths) async {
   final analysisErrors = <AnalysisError>[];
   for (final filePath in paths) {
     final normalizedPath = normalize(filePath);

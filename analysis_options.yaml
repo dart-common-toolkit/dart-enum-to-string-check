@@ -5,6 +5,7 @@ analyzer:
     - example/**
     - test/resources/**
     - test/**/examples/**
+    - assets_test/**/*.dart
   plugins:
     - dart_enum_to_string_check
   strong-mode:

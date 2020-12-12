@@ -14,4 +14,5 @@ dependencies:
   yaml: ^2.2.1
 
 dev_dependencies:
+  test: ^1.15.7
   effective_dart: ^1.2.0

@@ -56,6 +56,7 @@ Read [Commit Convention](https://github.com/fartem/repository-rules/blob/master/
 
 ```shell
 $ dart analyze
+$ dart test
 ```
 
 If you don't see any error messages, submit your pull request.

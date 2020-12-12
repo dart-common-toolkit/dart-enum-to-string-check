@@ -19,3 +19,5 @@ jobs:
         run: dart pub get
       - name: Analyze project source
         run: dart analyze
+      - name: Run tests
+        rut: dart test
