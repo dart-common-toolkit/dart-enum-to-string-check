@@ -20,4 +20,4 @@ jobs:
       - name: Analyze project source
         run: dart analyze
       - name: Run tests
-        rut: dart test
+        run: dart test
