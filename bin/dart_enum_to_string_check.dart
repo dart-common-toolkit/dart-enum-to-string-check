@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dart_enum_to_string_check/src/cli/cli_utils.dart';
 import 'package:dart_enum_to_string_check/src/cli/console_runner.dart';
-
 Future<void> main(List<String> arguments) async {
   final root = Directory.current.path;
   final libDirectory = Directory('$root/lib');

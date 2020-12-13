@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/checker/enum_to_string_checker.dart';
+import '../checker/enum_to_string_checker.dart';
 
 AnalysisError analysisErrorFor(String path, EnumToStringCheckerIssue issue, CompilationUnit unit) {
   final offsetLocation = unit.lineInfo.getLocation(issue.offset);

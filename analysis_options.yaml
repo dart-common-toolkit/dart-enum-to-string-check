@@ -1,4 +1,3 @@
-include: package:effective_dart/analysis_options.yaml
 analyzer:
   plugins:
     - dart_enum_to_string_check

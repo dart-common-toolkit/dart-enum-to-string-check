@@ -11,11 +11,11 @@ import 'package:analyzer/src/dart/analysis/driver.dart';
 import 'package:analyzer_plugin/plugin/plugin.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart' as plugin;
 import 'package:analyzer_plugin/protocol/protocol_generated.dart' as plugin;
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/utils/map_utils.dart';
 import 'package:glob/glob.dart';
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/utils/analyzer_plugin_utils.dart';
 
 import 'checker/enum_to_string_checker.dart';
+import 'utils/analyzer_plugin_utils.dart';
+import 'utils/map_utils.dart';
 
 class AnalyzerPlugin extends ServerPlugin {
   static const excludedFolders = ['.dart_tool/**', 'packages/**', '**/.symlinks/**'];

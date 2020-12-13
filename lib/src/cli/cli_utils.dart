@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/checker/enum_to_string_checker.dart';
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/utils/map_utils.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart';
 import 'package:yaml/yaml.dart';
+
+import '../analyzer_plugin/checker/enum_to_string_checker.dart';
+import '../analyzer_plugin/utils/map_utils.dart';
 
 List<String> excludedFilesFromAnalysisOptions(File analysisOptions) {
    final parsedOptions = loadYaml(analysisOptions.readAsStringSync()) as YamlMap;

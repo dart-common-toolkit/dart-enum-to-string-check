@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/file_system/physical_file_system.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
-import 'package:dart_enum_to_string_check/src/analyzer_plugin/analyzer_plugin.dart';
+import '../analyzer_plugin/analyzer_plugin.dart';
 
 import 'cli_utils.dart';
 
