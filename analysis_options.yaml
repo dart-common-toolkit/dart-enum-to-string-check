@@ -1,7 +1,5 @@
 include: package:effective_dart/analysis_options.yaml
 analyzer:
-  exclude:
-    - assets_test/**/*.dart
   plugins:
     - dart_enum_to_string_check
   errors:
@@ -16,3 +14,4 @@ analyzer:
     avoid_catches_without_on_clauses: ignore
   exclude:
     - lib/**/*.g.dart
+    - assets_test/**/*.dart
