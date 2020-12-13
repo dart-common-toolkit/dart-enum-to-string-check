@@ -1,12 +1,11 @@
 name: dart_enum_to_string_check_plugin_loader
 description: This pubspec determines the version of the analyzer plugin to load.
-version: 0.5.0
+version: 0.6.2
+author: fartem
+homepage: https://github.com/fartem/dart-enum-to-string-check
 
 environment:
   sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
-  dart_enum_to_string_check:
-    git:
-      url: https://github.com/fartem/dart-enum-to-string-check
-      ref: master
+  dart_enum_to_string_check: ^0.6.1
