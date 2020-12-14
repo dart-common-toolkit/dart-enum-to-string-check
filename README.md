@@ -1,6 +1,7 @@
 # dart_enum_to_string_check
 
 [![GitHubActions](https://github.com/fartem/dart-enum-to-string-check/workflows/Dart/badge.svg)](https://github.com/fartem/dart-enum-to-string-check/actions?query=workflow%3ADart)
+[![pub.dev](https://img.shields.io/pub/v/dart_enum_to_string_check.svg)](https://pub.dartlang.org/packages/dart_enum_to_string_check)
 
 ## About
 
