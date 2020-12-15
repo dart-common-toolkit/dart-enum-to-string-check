@@ -2,6 +2,7 @@
 
 [![GitHubActions](https://github.com/fartem/dart-enum-to-string-check/workflows/Dart/badge.svg)](https://github.com/fartem/dart-enum-to-string-check/actions?query=workflow%3ADart)
 ![Coverage](./coverage_badge.svg)
+[![pub.dev](https://img.shields.io/pub/v/dart_enum_to_string_check.svg)](https://pub.dartlang.org/packages/dart_enum_to_string_check)
 
 ## About
 
@@ -20,10 +21,7 @@ Add plugin as development dependency in `pubspec.yml`:
 ```yaml
 dev_dependencies:
 
-  dart_enum_to_string_check:
-    git:
-      url: https://github.com/fartem/dart-enum-to-string-check.git
-      ref: master
+  dart_enum_to_string_check: ^0.6.2
 
 ```
 
