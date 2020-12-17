@@ -37,6 +37,38 @@ Then restart Dart Analyzer Server.
 
 ### From CLI
 
+#### With pub
+
+To get `dart_enum_to_string_check` from `pub`, run from the shell:
+
+__Dart__
+
+```shell
+pub global active dart_enum_to_string_check
+```
+
+__Flutter__
+
+```shell
+flutter pub global active dart_enum_to_string_check
+```
+
+Then run from project folder:
+
+__Dart__
+
+```shell
+dart_enum_to_string_check
+```
+
+__Flutter__
+
+```shell
+flutter pub global run dart_enum_to_string_check
+```
+
+#### Without pub
+
 Download plugin to your machine and provide `bin/` location to PATH. Then run from project folder:
 
 ```shell
