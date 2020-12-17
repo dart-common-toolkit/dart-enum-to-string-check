@@ -33,7 +33,7 @@ class AnalyzerPlugin extends ServerPlugin {
   String get name => 'Dart Enum.toString() Check';
 
   @override
-  String get version => '1.0.0';
+  String get version => '0.6.2';
 
   AnalyzerPlugin(ResourceProvider provider) : super(provider);
 
