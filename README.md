@@ -44,7 +44,7 @@ To get `dart_enum_to_string_check` from `pub`, run from the shell:
 __Dart__
 
 ```shell
-pub global active dart_enum_to_string_check
+pub global activate dart_enum_to_string_check
 ```
 
 __Flutter__
