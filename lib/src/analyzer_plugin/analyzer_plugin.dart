@@ -17,8 +17,13 @@ import 'checker/enum_to_string_checker.dart';
 import 'utils/analyzer_plugin_utils.dart';
 import 'utils/map_utils.dart';
 
+/// Plugin class. Root for all data manipulations in plugin.
 class AnalyzerPlugin extends ServerPlugin {
-  static const excludedFolders = ['.dart_tool/**', 'packages/**', '**/.symlinks/**'];
+  static const excludedFolders = [
+    '.dart_tool/**',
+    'packages/**',
+    '**/.symlinks/**'
+  ];
   final _excludedGlobs = <Glob>[];
 
   var _filesFromSetPriorityFilesRequest = <String>[];
@@ -54,9 +59,7 @@ class AnalyzerPlugin extends ServerPlugin {
       ..performanceLog = performanceLog
       ..fileContentOverlay = fileContentOverlay;
 
-    _excludedGlobs.addAll(
-      prepareExcludes(excludedFolders, root.root)
-    );
+    _excludedGlobs.addAll(prepareExcludes(excludedFolders, root.root));
     final dartDriver = contextBuilder.buildDriver(root);
     runZonedGuarded(() {
       dartDriver.results.listen((analysisResult) {
@@ -76,16 +79,19 @@ class AnalyzerPlugin extends ServerPlugin {
       if (analysisResult.unit != null &&
           analysisResult.libraryElement != null &&
           !_excludedGlobs.any((glob) => glob.matches(analysisResult.path))) {
-          final enumToStringChecker = EnumToStringChecker(analysisResult.unit);
-          final issues = enumToStringChecker.enumToStringErrors();
-          if (issues.isNotEmpty) {
-            channel.sendNotification(
-              plugin.AnalysisErrorsParams(
-                analysisResult.path,
-                issues.map((issue) => analysisErrorFor(analysisResult.path, issue, analysisResult.unit)).toList(),
-              ).toNotification(),
-            );
-          }
+        final enumToStringChecker = EnumToStringChecker(analysisResult.unit);
+        final issues = enumToStringChecker.enumToStringErrors();
+        if (issues.isNotEmpty) {
+          channel.sendNotification(
+            plugin.AnalysisErrorsParams(
+              analysisResult.path,
+              issues
+                  .map((issue) => analysisErrorFor(
+                      analysisResult.path, issue, analysisResult.unit))
+                  .toList(),
+            ).toNotification(),
+          );
+        }
       } else {
         channel.sendNotification(
             plugin.AnalysisErrorsParams(analysisResult.path, [])

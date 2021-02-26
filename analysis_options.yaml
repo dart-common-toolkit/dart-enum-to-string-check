@@ -3,14 +3,11 @@ analyzer:
     - dart_enum_to_string_check
   errors:
     lines_longer_than_80_chars: ignore
-    public_member_api_docs: ignore
     avoid_equals_and_hash_code_on_mutable_classes: ignore
-    type_annotate_public_apis: ignore
     avoid_positional_boolean_parameters: ignore
     avoid_function_literals_in_foreach_calls: ignore
     prefer_mixin: ignore
     unnecessary_lambdas: ignore
     avoid_catches_without_on_clauses: ignore
   exclude:
-    - lib/**/*.g.dart
     - assets_test/**/*.dart

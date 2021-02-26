@@ -3,11 +3,14 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart' as plugin;
 
+/// Main check. Using for get issues from Dart Analyzer and cast it to [EnumToStringCheckerIssue].
 class EnumToStringChecker {
+  /// [CompilationUnit] for extract details for issues
   final CompilationUnit _compilationUnit;
 
   EnumToStringChecker(this._compilationUnit);
 
+  /// Parse errors from Dart Analyer and cast to [EnumToStringCheckerIssue].
   Iterable<EnumToStringCheckerIssue> enumToStringErrors() {
     final visitor = _EnumToStringCheckerVisitor();
     _compilationUnit.accept(visitor);
@@ -44,6 +47,7 @@ class _EnumToStringCheckerVisitor extends RecursiveAstVisitor<void> {
   }
 }
 
+/// Representation of issue that plugin use in internal methods.
 class EnumToStringCheckerIssue {
   final plugin.AnalysisErrorSeverity analysisErrorSeverity;
   final plugin.AnalysisErrorType analysisErrorType;

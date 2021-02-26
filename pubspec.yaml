@@ -1,6 +1,6 @@
 name: dart_enum_to_string_check
 description: A plugin for Dart Analyzer for checking enum.toString() usages.
-version: 0.6.2
+version: 0.6.3
 homepage: https://github.com/fartem/dart-enum-to-string-check
 
 environment:
