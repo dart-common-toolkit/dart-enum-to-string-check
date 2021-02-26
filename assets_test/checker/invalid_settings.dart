@@ -8,7 +8,8 @@ class InvalidSettings {
 
   HistoryFilter restoreHistoryFilter() {
     final filter = settingsManager.getString('history_filter') ?? 'all';
-    final filterPeriod = FilterPeriod.values.firstWhere((value) => value.toString() == filter);
+    final filterPeriod =
+        FilterPeriod.values.firstWhere((value) => value.toString() == filter);
     return HistoryFilter(filterPeriod);
   }
 }

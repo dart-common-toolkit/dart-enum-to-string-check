@@ -16,7 +16,8 @@ void main() {
         includedPaths: files,
         resourceProvider: PhysicalResourceProvider.INSTANCE,
       );
-      final errors = await collectAnalyzerErrors(analysisContextCollection, files);
+      final errors =
+          await collectAnalyzerErrors(analysisContextCollection, files);
       expect(
         1,
         errors.length,

@@ -8,10 +8,12 @@ class ValidSettings {
 
   HistoryFilter restoreHistoryFilter() {
     final filter = settingsManager.getString('history_filter') ?? 'all';
-    final filterPeriod = FilterPeriod.values.firstWhere((value) => _enumToString(value) == filter);
+    final filterPeriod = FilterPeriod.values
+        .firstWhere((value) => _enumToString(value) == filter);
     return HistoryFilter(filterPeriod);
   }
 
   // ignore: avoid_annotating_with_dynamic
-  String _enumToString(dynamic enumValue) => enumValue.toString().split('.').last;
+  String _enumToString(dynamic enumValue) =>
+      enumValue.toString().split('.').last;
 }

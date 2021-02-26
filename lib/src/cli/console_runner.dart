@@ -7,6 +7,7 @@ import '../analyzer_plugin/analyzer_plugin.dart';
 
 import 'cli_utils.dart';
 
+/// Runner class for execute plugin from CLI.
 class ConsoleRunner {
   final Directory _lib;
   final File _analysisOptions;
@@ -17,9 +18,8 @@ class ConsoleRunner {
     final paths = [_lib.path];
     final excludedFolders = [...AnalyzerPlugin.excludedFolders];
     if (_analysisOptions.existsSync()) {
-      excludedFolders.addAll(
-        excludedFilesFromAnalysisOptions(_analysisOptions)
-      );
+      excludedFolders
+          .addAll(excludedFilesFromAnalysisOptions(_analysisOptions));
     }
     final analysisContextCollection = AnalysisContextCollection(
       includedPaths: paths,
