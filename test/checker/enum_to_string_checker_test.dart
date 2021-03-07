@@ -6,22 +6,49 @@ import 'package:dart_enum_to_string_check/src/cli/cli_utils.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('EnumToStringChecker test', () {
-    test('Check with real files', () async {
-      final files = [
-        '${Directory.current.path}/assets_test/checker/valid_settings.dart',
-        '${Directory.current.path}/assets_test/checker/invalid_settings.dart',
-      ];
-      final analysisContextCollection = AnalysisContextCollection(
-        includedPaths: files,
-        resourceProvider: PhysicalResourceProvider.INSTANCE,
+  group(
+    'EnumToStringChecker test',
+    () {
+      test(
+        'Check multiple files (one with issus, one without issues)',
+        () async {
+          final files = [
+            '${Directory.current.path}/assets_test/checker/valid_settings.dart',
+            '${Directory.current.path}/assets_test/checker/invalid_settings.dart',
+          ];
+          await _checkFiles(files, 1);
+        },
       );
-      final errors =
-          await collectAnalyzerErrors(analysisContextCollection, files);
-      expect(
-        1,
-        errors.length,
+      test(
+        'Check file with issues',
+        () async {
+          final files = [
+            '${Directory.current.path}/assets_test/checker/invalid_settings.dart',
+          ];
+          await _checkFiles(files, 1);
+        },
       );
-    });
-  });
+      test(
+        'Check file without issues',
+        () async {
+          final files = [
+            '${Directory.current.path}/assets_test/checker/valid_settings.dart',
+          ];
+          await _checkFiles(files, 0);
+        },
+      );
+    },
+  );
+}
+
+Future<void> _checkFiles(files, issuesCount) async {
+  final analysisContextCollection = AnalysisContextCollection(
+    includedPaths: files,
+    resourceProvider: PhysicalResourceProvider.INSTANCE,
+  );
+  final issues = await collectAnalyzerErrors(analysisContextCollection, files);
+  expect(
+    issuesCount,
+    issues.length,
+  );
 }
