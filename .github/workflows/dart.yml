@@ -9,15 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image:  google/dart:latest
     steps:
       - uses: actions/checkout@v2
-      - name: Print Dart SDK version
-        run: dart --version
+      - uses: dart-lang/setup-dart@v1.0
+        with: 
+          sdk: 2.12.0
       - name: Install dependencies
         run: dart pub get
-      - name: Analyze project source
+      - name: Analyze code with Dart Analyzer
         run: dart analyze
       - name: Run tests
         run: dart test
