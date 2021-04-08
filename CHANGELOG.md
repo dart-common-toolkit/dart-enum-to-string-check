@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0
+
+* Added Null safety support.
+
 ## 0.6.3
 
 * Updated documentation.
