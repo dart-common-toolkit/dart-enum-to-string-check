@@ -39,20 +39,22 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   String get name => 'Dart Enum.toString() Check';
 
   @override
-  String get version => '1.0.0-alpha.0';
+  String get version => '1.0.0';
 
   DartEnumToStringAnalyzerPlugin(ResourceProvider provider) : super(provider);
 
   @override
   void contentChanged(String path) {
-    super.driverForPath(path)!.addFile(path);
+    super.driverForPath(path)?.addFile(path);
   }
 
   @override
   AnalysisDriverGeneric createAnalysisDriver(plugin.ContextRoot contextRoot) {
-    final root = ContextRoot(contextRoot.root, contextRoot.exclude,
-        pathContext: resourceProvider.pathContext)
-      ..optionsFilePath = contextRoot.optionsFile;
+    final root = ContextRoot(
+      contextRoot.root,
+      contextRoot.exclude,
+      pathContext: resourceProvider.pathContext,
+    )..optionsFilePath = contextRoot.optionsFile;
 
     final contextBuilder = ContextBuilder(resourceProvider, sdkManager, null)
       ..analysisDriverScheduler = analysisDriverScheduler
@@ -84,7 +86,9 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   }
 
   void _processResult(
-      AnalysisDriver driver, ResolvedUnitResult analysisResult) {
+    AnalysisDriver driver,
+    ResolvedUnitResult analysisResult,
+  ) {
     try {
       if (analysisResult.unit != null &&
           !_excludedGlobs.any((glob) => glob.matches(analysisResult.path!))) {
