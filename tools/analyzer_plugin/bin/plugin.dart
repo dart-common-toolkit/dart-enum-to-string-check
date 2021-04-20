@@ -1,5 +1,3 @@
-import 'dart:html';
-import 'dart:io';
 import 'dart:isolate';
 
 import 'package:dart_enum_to_string_check/dart_enum_to_string_check.dart';
