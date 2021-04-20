@@ -16,17 +16,24 @@ class ConsoleRunner {
 
   Future<List<AnalysisError>> findAnalysisErrors() async {
     final paths = [_lib.path];
-    final excludedFolders = [...AnalyzerPlugin.excludedFolders];
+    final excludedFolders = [...DartEnumToStringAnalyzerPlugin.excludedFolders];
     if (_analysisOptions.existsSync()) {
-      excludedFolders
-          .addAll(excludedFilesFromAnalysisOptions(_analysisOptions));
+      final folders = excludedFilesFromAnalysisOptions(_analysisOptions);
+      excludedFolders.addAll(folders);
     }
     final analysisContextCollection = AnalysisContextCollection(
       includedPaths: paths,
       resourceProvider: PhysicalResourceProvider.INSTANCE,
       excludedPaths: excludedFolders,
     );
-    final filePaths = resolvePaths(paths, excludedFolders);
-    return collectAnalyzerErrors(analysisContextCollection, filePaths);
+    final filePaths = resolvePaths(
+      paths,
+      excludedFolders,
+      _lib.path,
+    );
+    return collectAnalyzerErrors(
+      analysisContextCollection,
+      filePaths,
+    );
   }
 }

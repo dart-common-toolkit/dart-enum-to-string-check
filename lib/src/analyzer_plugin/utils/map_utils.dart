@@ -8,7 +8,7 @@ AnalysisError analysisErrorFor(
   EnumToStringCheckerIssue issue,
   CompilationUnit unit,
 ) {
-  final offsetLocation = unit.lineInfo.getLocation(issue.offset);
+  final offsetLocation = unit.lineInfo!.getLocation(issue.offset);
   return AnalysisError(
     issue.analysisErrorSeverity,
     issue.analysisErrorType,
@@ -18,6 +18,8 @@ AnalysisError analysisErrorFor(
       issue.length,
       offsetLocation.lineNumber,
       offsetLocation.columnNumber,
+      -1,
+      -1,
     ),
     issue.message,
     issue.code,

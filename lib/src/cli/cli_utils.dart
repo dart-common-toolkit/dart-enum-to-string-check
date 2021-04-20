@@ -5,6 +5,7 @@ import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:glob/glob.dart';
 import 'package:path/path.dart';
 import 'package:yaml/yaml.dart';
+import 'package:file/local.dart';
 
 import '../analyzer_plugin/checker/enum_to_string_checker.dart';
 import '../analyzer_plugin/utils/map_utils.dart';
@@ -13,23 +14,29 @@ import '../analyzer_plugin/utils/map_utils.dart';
 List<String> excludedFilesFromAnalysisOptions(File analysisOptions) {
   final parsedOptions = loadYaml(analysisOptions.readAsStringSync()) as YamlMap;
   final analyzerSection = parsedOptions.nodes['analyzer'];
-  if (analysisOptions != null) {
-    final dynamic excludedSection = (analyzerSection as YamlMap)['exclude'];
-    if (excludedSection != null) {
-      // ignore: avoid_annotating_with_dynamic
-      return (excludedSection as YamlList)
-          .map((dynamic path) => path as String)
-          .toList();
-    }
+  final dynamic excludedSection = (analyzerSection as YamlMap)['exclude'];
+  if (excludedSection != null) {
+    // ignore: avoid_annotating_with_dynamic
+    return (excludedSection as YamlList)
+        .map((dynamic path) => path as String)
+        .toList();
   }
   return [];
 }
 
-List<String> resolvePaths(List<String> paths, List<String> excludedFolders) {
-  final excludedGlobs = excludedFolders.map((path) => Glob(path)).toList();
+List<String> resolvePaths(
+  List<String> paths,
+  List<String?> excludedFolders,
+  String libRoot
+) {
+  final excludedGlobs = excludedFolders.map((path) => Glob(path!)).toList();
   return paths
       .expand((path) => Glob('$path/**/*.dart')
-          .listSync()
+          .listFileSystemSync(
+            const LocalFileSystem(),
+            root: libRoot,
+            followLinks: false,
+          )
           .whereType<File>()
           .where((file) => !_isExcluded(file.path, excludedGlobs))
           .map((e) => e.path))
@@ -52,7 +59,7 @@ Future<List<AnalysisError>> collectAnalyzerErrors(
         .getResolvedUnit(normalizedPath);
     final issuesInFile = EnumToStringChecker(unit.unit).enumToStringErrors();
     analysisErrors.addAll(issuesInFile
-        .map((issue) => analysisErrorFor(filePath, issue, unit.unit)));
+        .map((issue) => analysisErrorFor(filePath, issue, unit.unit!)));
   }
   return analysisErrors;
 }

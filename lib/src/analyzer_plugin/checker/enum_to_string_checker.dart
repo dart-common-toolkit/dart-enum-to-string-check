@@ -6,14 +6,14 @@ import 'package:analyzer_plugin/protocol/protocol_common.dart' as plugin;
 /// Main check. Using for get issues from Dart Analyzer and cast it to [EnumToStringCheckerIssue].
 class EnumToStringChecker {
   /// [CompilationUnit] for extract details for issues
-  final CompilationUnit _compilationUnit;
+  final CompilationUnit? _compilationUnit;
 
   EnumToStringChecker(this._compilationUnit);
 
   /// Parse errors from Dart Analyer and cast to [EnumToStringCheckerIssue].
   Iterable<EnumToStringCheckerIssue> enumToStringErrors() {
     final visitor = _EnumToStringCheckerVisitor();
-    _compilationUnit.accept(visitor);
+    _compilationUnit!.accept(visitor);
     return visitor.issues;
   }
 }
@@ -27,7 +27,7 @@ class _EnumToStringCheckerVisitor extends RecursiveAstVisitor<void> {
   void visitMethodInvocation(MethodInvocation node) {
     super.visitMethodInvocation(node);
     if (node.methodName.name == 'toString') {
-      final targetType = node.target.staticType;
+      final targetType = node.target!.staticType;
       if (targetType is InterfaceType) {
         final element = targetType.element;
         if (element.isEnum) {
