@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2
+
+* Fixed Null safety migration.
+
 ## 0.7.1
 
 * Updated documentation.

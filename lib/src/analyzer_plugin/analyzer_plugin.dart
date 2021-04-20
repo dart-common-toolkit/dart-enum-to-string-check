@@ -7,6 +7,8 @@ import 'package:analyzer/src/context/builder.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/context/context_root.dart';
 // ignore: implementation_imports
+// ignore: implementation_imports
+import 'package:analyzer/src/dart/analysis/file_state.dart';
 import 'package:analyzer/src/dart/analysis/driver.dart';
 import 'package:analyzer_plugin/plugin/plugin.dart';
 import 'package:analyzer_plugin/protocol/protocol_generated.dart' as plugin;
@@ -17,7 +19,7 @@ import 'utils/analyzer_plugin_utils.dart';
 import 'utils/map_utils.dart';
 
 /// Plugin class. Root for all data manipulations in plugin.
-class AnalyzerPlugin extends ServerPlugin {
+class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   static const excludedFolders = [
     '.dart_tool/**',
     'packages/**',
@@ -28,7 +30,7 @@ class AnalyzerPlugin extends ServerPlugin {
   var _filesFromSetPriorityFilesRequest = <String>[];
 
   @override
-  String get contactInfo => '';
+  String get contactInfo => 'https://github.com/fartem/dart-enum-to-string-check';
 
   @override
   List<String> get fileGlobsToAnalyze => const ['*.dart'];
@@ -39,27 +41,38 @@ class AnalyzerPlugin extends ServerPlugin {
   @override
   String get version => '1.0.0';
 
-  AnalyzerPlugin(ResourceProvider provider) : super(provider);
+  DartEnumToStringAnalyzerPlugin(ResourceProvider provider) : super(provider);
 
   @override
   void contentChanged(String path) {
-    super.driverForPath(path).addFile(path);
+    super.driverForPath(path)?.addFile(path);
   }
 
   @override
   AnalysisDriverGeneric createAnalysisDriver(plugin.ContextRoot contextRoot) {
-    final root = ContextRoot(contextRoot.root, contextRoot.exclude,
-        pathContext: resourceProvider.pathContext)
-      ..optionsFilePath = contextRoot.optionsFile;
+    final root = ContextRoot(
+      contextRoot.root,
+      contextRoot.exclude,
+      pathContext: resourceProvider.pathContext,
+    )..optionsFilePath = contextRoot.optionsFile;
 
     final contextBuilder = ContextBuilder(resourceProvider, sdkManager, null)
       ..analysisDriverScheduler = analysisDriverScheduler
       ..byteStore = byteStore
       ..performanceLog = performanceLog
-      ..fileContentOverlay = fileContentOverlay;
+      ..fileContentOverlay = FileContentOverlay();
+
+    final workspace = ContextBuilder.createWorkspace(
+      resourceProvider: resourceProvider,
+      options: ContextBuilderOptions(),
+      rootPath: contextRoot.root,
+    );
 
     _excludedGlobs.addAll(prepareExcludes(excludedFolders, root.root));
-    final dartDriver = contextBuilder.buildDriver(root);
+    final dartDriver = contextBuilder.buildDriver(
+      root,
+      workspace,
+    );
     runZonedGuarded(() {
       dartDriver.results.listen((analysisResult) {
         _processResult(dartDriver, analysisResult);
@@ -73,27 +86,28 @@ class AnalyzerPlugin extends ServerPlugin {
   }
 
   void _processResult(
-      AnalysisDriver driver, ResolvedUnitResult analysisResult) {
+    AnalysisDriver driver,
+    ResolvedUnitResult analysisResult,
+  ) {
     try {
       if (analysisResult.unit != null &&
-          analysisResult.libraryElement != null &&
-          !_excludedGlobs.any((glob) => glob.matches(analysisResult.path))) {
+          !_excludedGlobs.any((glob) => glob.matches(analysisResult.path!))) {
         final enumToStringChecker = EnumToStringChecker(analysisResult.unit);
         final issues = enumToStringChecker.enumToStringErrors();
         if (issues.isNotEmpty) {
           channel.sendNotification(
             plugin.AnalysisErrorsParams(
-              analysisResult.path,
+              analysisResult.path!,
               issues
                   .map((issue) => analysisErrorFor(
-                      analysisResult.path, issue, analysisResult.unit))
+                      analysisResult.path!, issue, analysisResult.unit!))
                   .toList(),
             ).toNotification(),
           );
         }
       } else {
         channel.sendNotification(
-            plugin.AnalysisErrorsParams(analysisResult.path, [])
+            plugin.AnalysisErrorsParams(analysisResult.path!, [])
                 .toNotification());
       }
     } on Exception catch (e, stackTrace) {
@@ -121,7 +135,7 @@ class AnalyzerPlugin extends ServerPlugin {
       for (final driver2 in driverMap.values)
         ...(driver2 as AnalysisDriver).addedFiles,
     };
-    final filesByDriver = <AnalysisDriverGeneric, List<String>>{};
+    final filesByDriver = <AnalysisDriverGeneric?, List<String>>{};
     for (final file in filesToFullyResolve) {
       final contextRoot = contextRootContaining(file);
       if (contextRoot != null) {
@@ -129,6 +143,6 @@ class AnalyzerPlugin extends ServerPlugin {
         filesByDriver.putIfAbsent(driver, () => <String>[]).add(file);
       }
     }
-    filesByDriver.forEach((driver, files) => driver.priorityFiles = files);
+    filesByDriver.forEach((driver, files) => driver!.priorityFiles = files);
   }
 }
