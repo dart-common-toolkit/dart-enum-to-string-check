@@ -21,7 +21,7 @@ Add plugin as development dependency in `pubspec.yml`:
 ```yaml
 dev_dependencies:
 
-  dart_enum_to_string_check: ^0.7.0
+  dart_enum_to_string_check: ^0.7.3
 
 ```
 
@@ -50,7 +50,7 @@ pub global activate dart_enum_to_string_check
 __Flutter__
 
 ```shell
-flutter pub global active dart_enum_to_string_check
+flutter pub global activate dart_enum_to_string_check
 ```
 
 Then run from project folder:
