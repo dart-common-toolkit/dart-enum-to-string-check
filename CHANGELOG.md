@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.5
+
+* Fixed CLI Runner.
+
 ## 0.7.4
 
 * Fixed bugs.
