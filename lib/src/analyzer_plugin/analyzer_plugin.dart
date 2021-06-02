@@ -101,21 +101,33 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
             plugin.AnalysisErrorsParams(
               analysisResult.path!,
               issues
-                  .map((issue) => analysisErrorFor(
-                      analysisResult.path!, issue, analysisResult.unit!))
+                  .map(
+                    (issue) => analysisErrorFor(
+                      analysisResult.path!,
+                      issue,
+                      analysisResult.unit!,
+                    ),
+                  )
                   .toList(),
             ).toNotification(),
           );
         }
       } else {
         channel.sendNotification(
-            plugin.AnalysisErrorsParams(analysisResult.path!, [])
-                .toNotification());
+          plugin.AnalysisErrorsParams(
+            analysisResult.path!,
+            [],
+          ).toNotification(),
+        );
       }
     } on Exception catch (e, stackTrace) {
       channel.sendNotification(
-          plugin.PluginErrorParams(false, e.toString(), stackTrace.toString())
-              .toNotification());
+        plugin.PluginErrorParams(
+          false,
+          e.toString(),
+          stackTrace.toString(),
+        ).toNotification(),
+      );
     }
   }
 
