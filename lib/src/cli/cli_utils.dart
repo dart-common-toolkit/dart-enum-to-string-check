@@ -25,10 +25,7 @@ List<String> excludedFilesFromAnalysisOptions(File analysisOptions) {
 }
 
 List<String> resolvePaths(
-  List<String> paths,
-  List<String?> excludedFolders,
-  String libRoot
-) {
+    List<String> paths, List<String?> excludedFolders, String libRoot) {
   final excludedGlobs = excludedFolders.map((path) => Glob(path!)).toList();
   return paths
       .expand((path) => Glob('$path/**/*.dart')
@@ -56,6 +53,7 @@ Future<List<AnalysisError>> collectAnalyzerErrors(
     final unit = await analysisContextCollection
         .contextFor(normalizedPath)
         .currentSession
+        // ignore: deprecated_member_use
         .getResolvedUnit(normalizedPath);
     final issuesInFile = EnumToStringChecker(unit.unit).enumToStringErrors();
     analysisErrors.addAll(issuesInFile

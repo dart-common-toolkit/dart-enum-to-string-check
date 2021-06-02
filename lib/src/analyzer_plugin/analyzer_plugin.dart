@@ -1,22 +1,19 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/analysis/context_builder.dart';
+import 'package:analyzer/dart/analysis/context_locator.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/file_system/file_system.dart';
 // ignore: implementation_imports
-import 'package:analyzer/src/context/builder.dart';
-// ignore: implementation_imports
-import 'package:analyzer/src/context/context_root.dart';
-// ignore: implementation_imports
-// ignore: implementation_imports
-import 'package:analyzer/src/dart/analysis/file_state.dart';
 import 'package:analyzer/src/dart/analysis/driver.dart';
+// ignore: implementation_imports
+import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:analyzer_plugin/plugin/plugin.dart';
 import 'package:analyzer_plugin/protocol/protocol_generated.dart' as plugin;
+import 'package:dart_enum_to_string_check/src/analyzer_plugin/utils/map_utils.dart';
 import 'package:glob/glob.dart';
 
 import 'checker/enum_to_string_checker.dart';
-import 'utils/analyzer_plugin_utils.dart';
-import 'utils/map_utils.dart';
 
 /// Plugin class. Root for all data manipulations in plugin.
 class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
@@ -30,7 +27,8 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   var _filesFromSetPriorityFilesRequest = <String>[];
 
   @override
-  String get contactInfo => 'https://github.com/fartem/dart-enum-to-string-check';
+  String get contactInfo =>
+      'https://github.com/fartem/dart-enum-to-string-check';
 
   @override
   List<String> get fileGlobsToAnalyze => const ['*.dart'];
@@ -50,38 +48,42 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
 
   @override
   AnalysisDriverGeneric createAnalysisDriver(plugin.ContextRoot contextRoot) {
-    final root = ContextRoot(
-      contextRoot.root,
-      contextRoot.exclude,
-      pathContext: resourceProvider.pathContext,
-    )..optionsFilePath = contextRoot.optionsFile;
-
-    final contextBuilder = ContextBuilder(resourceProvider, sdkManager, null)
-      ..analysisDriverScheduler = analysisDriverScheduler
-      ..byteStore = byteStore
-      ..performanceLog = performanceLog
-      ..fileContentOverlay = FileContentOverlay();
-
-    final workspace = ContextBuilder.createWorkspace(
+    final rootPath = contextRoot.root;
+    final locator = ContextLocator(
       resourceProvider: resourceProvider,
-      options: ContextBuilderOptions(),
-      rootPath: contextRoot.root,
+    ).locateRoots(
+      includedPaths: [rootPath],
+      excludedPaths: contextRoot.exclude,
+      optionsFile: contextRoot.optionsFile,
     );
 
-    _excludedGlobs.addAll(prepareExcludes(excludedFolders, root.root));
-    final dartDriver = contextBuilder.buildDriver(
-      root,
-      workspace,
+    final builder = ContextBuilder(
+      resourceProvider: resourceProvider,
     );
-    runZonedGuarded(() {
-      dartDriver.results.listen((analysisResult) {
-        _processResult(dartDriver, analysisResult);
-      });
-    }, (e, stackTrace) {
-      channel.sendNotification(
-          plugin.PluginErrorParams(false, e.toString(), stackTrace.toString())
-              .toNotification());
-    });
+    final context = builder.createContext(
+      contextRoot: locator.first,
+    ) as DriverBasedAnalysisContext;
+    final dartDriver = context.driver;
+
+    runZonedGuarded(
+      () {
+        dartDriver.results.listen((analysisResult) {
+          _processResult(
+            dartDriver,
+            analysisResult,
+          );
+        });
+      },
+      (e, stackTrace) {
+        channel.sendNotification(
+          plugin.PluginErrorParams(
+            false,
+            e.toString(),
+            stackTrace.toString(),
+          ).toNotification(),
+        );
+      },
+    );
     return dartDriver;
   }
 
