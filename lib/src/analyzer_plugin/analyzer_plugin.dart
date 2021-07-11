@@ -37,7 +37,7 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   String get name => 'Dart Enum.toString() Check';
 
   @override
-  String get version => '1.0.0';
+  String get version => '1.0.0-alpha.0';
 
   DartEnumToStringAnalyzerPlugin(ResourceProvider provider) : super(provider);
 
@@ -49,38 +49,37 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   @override
   AnalysisDriverGeneric createAnalysisDriver(plugin.ContextRoot contextRoot) {
     final rootPath = contextRoot.root;
-    final locator = ContextLocator(
-      resourceProvider: resourceProvider,
-    ).locateRoots(
+    final locator =
+        ContextLocator(resourceProvider: resourceProvider).locateRoots(
       includedPaths: [rootPath],
       excludedPaths: contextRoot.exclude,
       optionsFile: contextRoot.optionsFile,
     );
 
-    final builder = ContextBuilder(
-      resourceProvider: resourceProvider,
-    );
-    final context = builder.createContext(
-      contextRoot: locator.first,
-    ) as DriverBasedAnalysisContext;
-    final dartDriver = context.driver;
+    if (locator.isEmpty) {
+      final error = StateError('Unexpected empty context');
+      channel.sendNotification(plugin.PluginErrorParams(
+        true,
+        error.message,
+        error.stackTrace.toString(),
+      ).toNotification());
+      throw error;
+    }
 
+    final builder = ContextBuilder(resourceProvider: resourceProvider);
+    final context = builder.createContext(contextRoot: locator.first)
+        as DriverBasedAnalysisContext;
+    final dartDriver = context.driver;
     runZonedGuarded(
       () {
         dartDriver.results.listen((analysisResult) {
-          _processResult(
-            dartDriver,
-            analysisResult,
-          );
+          _processResult(dartDriver, analysisResult);
         });
       },
       (e, stackTrace) {
         channel.sendNotification(
-          plugin.PluginErrorParams(
-            false,
-            e.toString(),
-            stackTrace.toString(),
-          ).toNotification(),
+          plugin.PluginErrorParams(false, e.toString(), stackTrace.toString())
+              .toNotification(),
         );
       },
     );
@@ -132,15 +131,16 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   }
 
   /*
-   * Code below is a fix to handle files to Analyzer from https://github.com/wrike/dart-code-metrics
+   * Code below is a fix to handle files to Analyzer from https://github.com/dart-code-metrics/dart-code-metrics
    */
 
   @override
-  Future<plugin.AnalysisSetPriorityFilesResult> handleAnalysisSetPriorityFiles(
-      plugin.AnalysisSetPriorityFilesParams parameters) async {
-    _filesFromSetPriorityFilesRequest = parameters.files;
+  Future<plugin.AnalysisSetContextRootsResult> handleAnalysisSetContextRoots(
+    plugin.AnalysisSetContextRootsParams parameters,
+  ) async {
+    final result = await super.handleAnalysisSetContextRoots(parameters);
     _updatePriorityFiles();
-    return plugin.AnalysisSetPriorityFilesResult();
+    return result;
   }
 
   void _updatePriorityFiles() {
@@ -158,5 +158,13 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
       }
     }
     filesByDriver.forEach((driver, files) => driver!.priorityFiles = files);
+  }
+
+  @override
+  Future<plugin.AnalysisSetPriorityFilesResult> handleAnalysisSetPriorityFiles(
+      plugin.AnalysisSetPriorityFilesParams parameters) async {
+    _filesFromSetPriorityFilesRequest = parameters.files;
+    _updatePriorityFiles();
+    return plugin.AnalysisSetPriorityFilesResult();
   }
 }

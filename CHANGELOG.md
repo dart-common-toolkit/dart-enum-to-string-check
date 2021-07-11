@@ -1,32 +1,36 @@
 # Changelog
 
+## 0.8.0
+
+* fixed startup bugs.
+
 ## 0.7.5
 
-* Fixed CLI Runner.
+* fixed CLI Runner.
 
 ## 0.7.4
 
-* Fixed bugs.
+* fixed bugs.
 
 ## 0.7.3
 
-* Updated documentation.
+* updated documentation.
 
 ## 0.7.2
 
-* Fixed Null safety migration.
+* fixed Null safety migration.
 
 ## 0.7.1
 
-* Updated documentation.
+* updated documentation.
 
 ## 0.7.0
 
-* Added Null safety support.
+* added Null safety support.
 
 ## 0.6.3
 
-* Updated documentation.
+* updated documentation.
 
 ## 0.6.2
 
