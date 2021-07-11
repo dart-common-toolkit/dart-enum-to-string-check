@@ -7,7 +7,4 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  dart_enum_to_string_check:
-    git:
-      url: https://github.com/fartem/dart-enum-to-string-check
-      ref: 0.8.0
+  dart_enum_to_string_check: ^0.8.0
