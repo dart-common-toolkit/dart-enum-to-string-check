@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0
+
+* fixed startup bugs.
+
 ## 0.7.5
 
 * fixed CLI Runner.
