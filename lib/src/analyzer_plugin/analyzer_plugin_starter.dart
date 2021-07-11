@@ -7,6 +7,7 @@ import 'analyzer_plugin.dart';
 
 /// Entry point of plugin. Dart Analyzer Server runs it from its side.
 void start(Iterable<String> _, SendPort sendPort) {
-  ServerPluginStarter(DartEnumToStringAnalyzerPlugin(PhysicalResourceProvider.INSTANCE))
+  ServerPluginStarter(
+          DartEnumToStringAnalyzerPlugin(PhysicalResourceProvider.INSTANCE))
       .start(sendPort);
 }

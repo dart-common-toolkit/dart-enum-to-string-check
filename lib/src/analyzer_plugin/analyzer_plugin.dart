@@ -49,7 +49,8 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   @override
   AnalysisDriverGeneric createAnalysisDriver(plugin.ContextRoot contextRoot) {
     final rootPath = contextRoot.root;
-    final locator = ContextLocator(resourceProvider: resourceProvider).locateRoots(
+    final locator =
+        ContextLocator(resourceProvider: resourceProvider).locateRoots(
       includedPaths: [rootPath],
       excludedPaths: contextRoot.exclude,
       optionsFile: contextRoot.optionsFile,
@@ -66,7 +67,8 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
     }
 
     final builder = ContextBuilder(resourceProvider: resourceProvider);
-    final context = builder.createContext(contextRoot: locator.first) as DriverBasedAnalysisContext;
+    final context = builder.createContext(contextRoot: locator.first)
+        as DriverBasedAnalysisContext;
     final dartDriver = context.driver;
     runZonedGuarded(
       () {
