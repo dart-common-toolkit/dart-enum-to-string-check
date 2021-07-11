@@ -133,11 +133,12 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
    */
 
   @override
-  Future<plugin.AnalysisSetPriorityFilesResult> handleAnalysisSetPriorityFiles(
-      plugin.AnalysisSetPriorityFilesParams parameters) async {
-    _filesFromSetPriorityFilesRequest = parameters.files;
+  Future<plugin.AnalysisSetContextRootsResult> handleAnalysisSetContextRoots(
+    plugin.AnalysisSetContextRootsParams parameters,
+  ) async {
+    final result = await super.handleAnalysisSetContextRoots(parameters);
     _updatePriorityFiles();
-    return plugin.AnalysisSetPriorityFilesResult();
+    return result;
   }
 
   void _updatePriorityFiles() {
@@ -155,5 +156,13 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
       }
     }
     filesByDriver.forEach((driver, files) => driver!.priorityFiles = files);
+  }
+
+  @override
+  Future<plugin.AnalysisSetPriorityFilesResult> handleAnalysisSetPriorityFiles(
+      plugin.AnalysisSetPriorityFilesParams parameters) async {
+    _filesFromSetPriorityFilesRequest = parameters.files;
+    _updatePriorityFiles();
+    return plugin.AnalysisSetPriorityFilesResult();
   }
 }
