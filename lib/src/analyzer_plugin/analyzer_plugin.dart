@@ -37,7 +37,7 @@ class DartEnumToStringAnalyzerPlugin extends ServerPlugin {
   String get name => 'Dart Enum.toString() Check';
 
   @override
-  String get version => '1.0.0';
+  String get version => '1.0.0-alpha.0';
 
   DartEnumToStringAnalyzerPlugin(ResourceProvider provider) : super(provider);
 
