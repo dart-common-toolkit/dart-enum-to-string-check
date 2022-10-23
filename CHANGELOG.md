@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.2
+
+* updated version.
+
 ## 0.8.1
 
 * updated version.
