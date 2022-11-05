@@ -25,7 +25,7 @@ Add plugin as development dependency in `pubspec.yml`:
 ```yaml
 dev_dependencies:
 
-  dart_enum_to_string_check: ^0.8.2
+  dart_enum_to_string_check: ^0.8.3
 
 ```
 
