@@ -1,20 +1,24 @@
 # ATTENTION
 
-## Because last Dart version supports `name` parameter this plugin is recommended to use on old Dart revisions. Right now repository is not in Archive because plugin have some bugs that can be fixed in future. After all checks and fully compatible understanding repository can be placed to Archive.
+## Because last Dart version supports `name` parameter this plugin is recommended to use on old Dart revisions. Right now repository is not in Archive because plugin have some bugs that can be fixed in future. After all checks and fully compatible understanding, repository can be placed to Archive.
 
 # dart_enum_to_string_check
 
-[![GitHubActions](https://github.com/dart-common-toolkit/dart-enum-to-string-check/workflows/Dart/badge.svg)](https://github.com/dart-common-toolkit/dart-enum-to-string-check/actions?query=workflow%3ADart)
+[![GitHubActions](https://github.com/dart-common-toolkit/dart-enum-to-string-check/workflows/Dart/badge.svg)](https://github.com/fartem/dart-enum-to-string-check/actions?query=workflow%3ADart)
 [![Coverage](./coverage_badge.svg)](./coverage_badge.svg)
 [![pub.dev](https://img.shields.io/pub/v/dart_enum_to_string_check.svg)](https://pub.dartlang.org/packages/dart_enum_to_string_check)
 
 ## About
 
-Plugin for Dart Analyzer to checking enum.toString() usages.
+Plugin for Dart Analyzer to check `enum.toString()` usages.
 
 ## Motivation
 
-Default Enum.toString() method represents an enum constant as class name + constant name (example: `Colors.green` but not `green`). In some cases this cast is not valid for a program logic (parse values to DB or JSON and vice versa) and can causing some problems (when from DB you get a strings without class names, `"green" == Colors.green.toString()` is not as we needed). Plugin helps to prevent described problem.
+Default `enum.toString()` method represents an enum constant as class name + constant name (for example, when we
+call `color.toString()` we have `Colors.green` but
+not `green`). In some cases this cast is not valid for an app logic (parse values to DB or JSON and vice versa) and
+can causing some problems (when from DB you get a strings without class names, `"green" == Colors.green.toString()` is
+not as we need). Plugin helps to prevent described problem.
 
 ## How to use
 
@@ -24,12 +28,10 @@ Add plugin as development dependency in `pubspec.yml`:
 
 ```yaml
 dev_dependencies:
-
   dart_enum_to_string_check: ^0.8.3
-
 ```
 
-Add plugin name to `analysis_options.yaml`:
+Add plugin to `analysis_options.yaml`:
 
 ```yaml
 analyzer:
@@ -43,51 +45,38 @@ Then restart Dart Analyzer Server.
 
 #### With pub
 
-To get `dart_enum_to_string_check` from `pub`, run from the shell:
-
-__Dart__
+To get `dart_enum_to_string_check` from `pub` run:
 
 ```shell
-pub global activate dart_enum_to_string_check
-```
-
-__Flutter__
-
-```shell
-flutter pub global activate dart_enum_to_string_check
+$ dart pub global activate dart_enum_to_string_check
 ```
 
 Then run from project folder:
 
-__Dart__
-
 ```shell
-dart_enum_to_string_check
-```
-
-__Flutter__
-
-```shell
-flutter pub global run dart_enum_to_string_check
+$ dart_enum_to_string_check
 ```
 
 #### Without pub
 
-Download plugin to your machine and provide `bin/` location to PATH. Then run from project folder:
+Download plugin to your machine and provide `bin/` location to `PATH`. Then run from project folder:
 
 ```shell
-dart dart_enum_to_string_check.dart
+$ dart dart_enum_to_string_check.dart
 ```
 
 ## References
 
-Solutions from [dart-code-metrics](https://github.com/dart-code-checker/dart-code-metrics) by [Wrike](https://github.com/wrike):
+Solutions from [dart-code-metrics](https://github.com/dart-code-checker/dart-code-metrics)
+by [Wrike](https://github.com/wrike):
+
 - [Files resolving in Dart Analyzer Plugin](https://github.com/fartem/dart-enum-to-string-check/blob/master/lib/src/analyzer_plugin/analyzer_plugin.dart)
 - [Dart Analyzer Plugin utils](https://github.com/fartem/dart-enum-to-string-check/blob/master/lib/src/analyzer_plugin/analyzer_plugin_utils.dart)
 
 ## How to contribute
 
-Read [Commit Convention](https://github.com/fartem/repository-rules/blob/master/commit-convention/COMMIT_CONVENTION.md). Make sure your build is green before you contribute your pull request. Then:
+Read [Commit Convention](https://github.com/fartem/repository-rules/blob/master/commit-convention/COMMIT_CONVENTION.md).
+Make sure your build is green before you contribute your pull request. Then:
 
 ```shell
 $ dart analyze
