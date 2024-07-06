@@ -1,6 +1,6 @@
 # ATTENTION
 
-## Because last Dart version supports `name` parameter this plugin is recommended to use on old Dart revisions. Right now repository is not in Archive because plugin have some bugs that can be fixed in future. After all checks and fully compatible understanding, repository can be placed to Archive.
+## Because last Dart version supports `name` parameter this plugin is recommended to use on old Dart revisions.
 
 # dart_enum_to_string_check
 
